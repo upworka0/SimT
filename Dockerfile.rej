@@ -1,0 +1,10 @@
+diff a/Dockerfile b/Dockerfile	(rejected hunks)
+@@ -28,6 +28,8 @@
+ ENV LANGUAGE en_CA:en  
+ ENV LC_ALL en_CA.UTF-8  
+ 
++RUN python manage.py migrate
++
+ EXPOSE 8000
+ ENTRYPOINT ["changeIpAddress.sh"]
+ CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

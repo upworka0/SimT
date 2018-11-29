@@ -1,0 +1,7 @@
+diff a/mysql_simbt/create_database.sql b/mysql_simbt/create_database.sql	(rejected hunks)
+@@ -0,0 +1,5 @@
++CREATE DATABASE SimBT;
++
++CREATE USER 'SimBT'@'%' IDENTIFIED BY 'S1mBTUs3r';
++GRANT ALL PRIVILEGES ON SimBT.* TO 'SimBT'@'%';
++FLUSH PRIVILEGES;

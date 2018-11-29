@@ -1,0 +1,31 @@
+$th_font_size: 14px;
+$td_font_size: 13px;
+$padding_table: 0.5rem;
+
+
+%border_black_solid{
+    border: solid 1px black;
+}
+
+%padding_table{
+    padding: $padding_table;
+}
+
+table {
+    @extend %border_black_solid;
+    @extend %padding_table;
+    text-align: center;
+    margin: 1rem;
+    th{
+        @extend %border_black_solid;
+        @extend %padding_table;
+        font-size: $th_font_size;
+    }
+    td{
+        @extend %border_black_solid;
+        font-size: $td_font_size;
+    }
+}
+tr:hover{
+    background-color:#f5f5f5
+}

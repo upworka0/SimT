@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+{% extends 'user_interface/base.html' %}
+
+{% load staticfiles %}
+
+    {% block content %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md col-6">
+                    <form method="POST">
+                        {% for field in forms %}
+                            <div class="row">
+                                {{ field.label }}
+                            </div>
+                            <div class="row">
+                                {{ field }}
+                            </div>
+                        {% endfor %}
+                        {% csrf_token %}
+                        <button type="submit" value="Add">Ajouter cette étude</button>
+                    </form>
+                </div>
+                <div class='col-md col-6'>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Tension</th>
+                                <th>Date de création</th>
+                                <th>Effacer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for etude in etudes%}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'edit_study' %}?voltage={{ etude.etude_tension }}&etude_id={{ etude.etude_id }}">
+                                        {{ etude.etude_nom }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <!---<a href="{% url 'edit_study' %}?voltage={{ etude.etude_tension }}&etude_id={{ etude.etude_id }}">-->
+                                        {{ etude.etude_tension }}
+                                    <!---</a>-->
+                                </td>
+                                <td>
+                                    <!---<a href="{% url 'edit_study' %}?voltage={{ etude.etude_tension }}&etude_id={{ etude.etude_id }}">-->
+                                        {{ etude.etude_date_creation }}
+                                    <!---</a>-->
+                                </td>
+                                <td>
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="etude_id" value="{{ etude.etude_id }}"/>
+                                        <button type="submit"><span class=""><img src="{% static 'node_modules/octicons/build/svg/x.svg' %}" /></span></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+{% extends 'user_interface/base.html' %}
+
+{% load staticfiles %}
+    {% block content %}
+        <div class="ids hidden">
+            <div class="etude_id">{{ etude.etude_id }}</div>
+            <div class="client_id">{{ clients.client_id }}</div>
+        </div>
+        <div class="context-menu">
+            <div class="menu">
+                <div class="menu-item" id="select">Sélection</div>
+                <hr />
+                <div class="menu-item" id="conductor">Créer un nouveau conducteur</div>
+                <!-- <div class="menu-item" id="transfo">Créer un nouveau tranformateur</div> -->
+                <div class="menu-item" id="client">Créer un nouveau client</div>
+            </div>
+            <div class="menu-element">
+
+            </div>
+        </div>
+        <nav class="" id="navigation">
+            <h1>Navigation Area</h1>
+        </nav>
+        <main class="container-fluid">
+            <!---Toolbox-->
+            <div class="row">
+                <div class="col-lg col-2">
+                    <div class="toolbox" id="toolboxPane">
+                        <div class="toolbox-content">
+                            <button type="button" id="selectionButton" class="button button-selected">Selection</button>
+                            <!-- <button id="moveButton">Déplacer</button> -->
+                            <!-- <button id="tranformerButton">Transformateur</button> -->
+                            <button id="conductorButton" class="button">Conducteur</button>
+                            <button id="clientButton" class="button">Client</button>
+                            <div class="zoom-buttons">
+                                <button id="zoomInButton" class="button zoom-btn"><img class="zoom-image" src="{% static 'img/zoomIn.png' %}" /></button>
+                                <button id="zoomOutButton" class="button zoom-btn"><img class="zoom-image" src="{% static 'img/zoomOut.png' %}"/></button>
+                            </div>
+                            <button id="resetButton" class="button">Reset</button>
+                            <div class="centered">
+                                <p id="zoomStatus">100%</p>
+                                <p id="positionInfo"></p>
+                                <div id="message"></div>
+                            </div>
+                            <div class="centered voltageBox">
+                               {% csrf_token %}
+                            </div>
+                            <div>
+                                <input type="hidden" value="{{ etude.etude_id }}" id="study_id"/>
+                                <button type="button" id="save_network">Sauvegarder</button>
+                            </div>
+                            <div class="centered">
+
+                              <button type="button" id="calculate_network" name="button">Calculate</button>
+                            </div>
+                            <div class="hidden">
+                                <input type="hidden" value="{{ etude.etude_component_list }}" id="data" />
+                            </div>
+                            <div class="hidden">
+                                <input type="hidden" value="{{ etude.etude_serialized_visual }}" id="visual" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <!-- Drawings-->
+                    <div id="stage-parent">
+                        <!--Where all the magic happens-->
+                        <div id="container">
+
+                        </div>
+                    </div>
+                </div>
+                <!---Specs-->
+                <div class="col-lg col-2">
+                    <div class="specifications" id="specificationPane">
+                        <h3>Spécifications</h3>
+                        <p id="elementName"></p>
+                        <div id="transformerSpecs">
+                            <form id="transformer_form">
+                                <input type="hidden" value=""/>
+                                <p>Type de transformateur :
+                                    <select id="transformerTypeList">
+                                        <option value="none" selected> ---- </option>
+                                        {% for trans in type_transformateur %}
+                                            <option value="{{ trans.type_transformateur_id }}">{{ trans.type_transformateur_type }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </p>
+                                <p>Alias : 
+                                    <!--- JS will take care of handling text -->
+                                    <input type="text" id="transformer_alias" value=""/>
+                                </p>
+                                <p>Description :
+                                  <input type="text" id="transformer_description" value="" disabled />
+                                </p>
+                                <p>Capacité :
+                                  <input type="text" id="transformer_capacity" value="" disabled />
+                                </p>
+                                <p>Resistance (%) :
+                                  <input type="text" id="transformer_resistance" value="" disabled />
+                                </p>
+                                <p>Reactance (%) :
+                                  <input type="text" id="transformer_reactance" value="" disabled />
+                                </p>
+                                <p>Perte à vide (%) :
+                                  <input type="text" id="transformer_no_load_loss" value="" disabled />
+                                </p>
+                                <p>Transformateur est aérien :
+                                  <input type="checkbox" id="transformer_overhead" value="false" disabled />
+                                </p>
+                                <p>
+                                    <button type="submit">Savegarder</button>
+                                </p>
+                            </form>
+                        </div>
+                        <div id="clientSpecs">
+                            <form id="client_form">
+                                <input type="hidden" value="" />
+                                <p>Type de chauffage
+                                    <select id="heatingTypeList">
+                                        <option value="none" selected> ---- </option>
+                                        {% for heating in type_chauffage %}
+                                            <option value="{{ heating.type_chauffage_id }}">{{ heating.type_chauffage_type }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </p>
+                                <p>Alias :
+                                        <!--- JS will take care of handling text -->
+                                       <input type="text" id="client_alias" value="" />
+                                </p>
+                                <p> Description :
+                                  <input type="text" id="heating_description" disabled  />
+                                </p>
+                                <p>Type de logement :
+                                    <select id="lodgingTypeList">
+                                        <option value="none" selected> ---- </option>
+                                        {% for housing in type_logement %}
+                                            <option value="{{ housing.type_logement_id }}">{{ housing.type_logement_type }}</option>
+                                        {% endfor%}
+                                    </select>
+                                </p>
+                                <p>Description :
+                                  <input type="text" id="lodging_description" disabled/>
+                                </p>
+                                <p>Superficie Habitée :
+                                  <input type="number" id="habitable_area" value=""/>
+                                </p>
+                                <p>Nombre d'étages :
+                                  <input type="number" id="number_of_floors" value="">
+                                </p>
+                                <p>Nombre de logements :
+                                  <input type="number" id="number_of_lodgings" value="">
+                                </p>
+                                <p>
+                                    <button type="submit">Savegarder</button>
+                                </p>
+                            </form>
+                        </div>
+                        <div id="conductorSpecs">
+                            <!--<form id="conductor_form">-->
+                            <form>
+                                <!--TODO Set value to input-->
+                                <input type="hidden" value="">
+                                <p>Type de conducteur :
+                                    <select id="conductorTypeList">
+                                        <option value="none" selected> ---- </option>
+                                        {% for conductor in type_conducteur %}
+                                            <option value="{{ conductor.type_conducteur_id }}">{{ conductor.type_conducteur_type }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </p>
+                                <!---<p>Alias :
+                                    <input type="text" id="conductor_alias" value="" />
+                                </p>-->
+                                <p>Description :
+                                  <input type="text" id="conductor_description" value="" disabled />
+                                </p>
+                                <p>Conductor est aérien :
+                                  <input type="checkbox" id="conductor_overhead" disabled>
+                                </p>
+                                <p>&#8486;/km :
+                                  <input type="test" id="conductor_resistance_per_km" value="" disabled  />
+                                </p>
+                                <p>&#120491;R/&#8451;
+                                  <input type="text" id="conductor_resistance_variation_by_celcius" value="" disabled>
+                                </p>
+                                <p>&#8486;/km avec &#8451;:
+                                  <input type="text" id="conductor_resistance_per_km_with_temperature" value="" disabled>
+                                </p>
+                                <p>Iadm(A) :
+                                  <input type="text" id="conductor_admissible_current" value="" disabled />
+                                </p>
+                                <p>&#120491;T/I&#178; :
+                                  <input type="text" id="conductor_variation_temp_depending_current" value="" disabled />
+                                </p>
+                                <p>&#120491;R/I&#178; :
+                                  <input type="text" id="conductor_variation_resistance_depending_current" value="" disabled />
+                                </p>
+                                <p>X :
+                                  <input type="text" id="conductor_reactance" value="" disabled />
+                                </p>
+                                <p>Capacité de reprise en hiver :
+                                  <input type="text" id="conductor_winter_recovery" value="" disabled />
+                                </p>
+                                <p>Capacité planifier en été :
+                                  <input type="text" id="conductor_summer_schelude" value="" disabled />
+                                </p>
+                                <p>Mat du client:
+                                  <input type="text" id="conductor_client_pole" value="" disabled  />
+                                </p>
+                                <p>Résistance du mat du client :
+                                  <input type="text" id="client_pole_resistance" value="" disabled />
+                                </p>
+                                <p>Réactance du mat du client :
+                                  <input type="text" id="client_pole_reactance" value="" disabled />
+                                </p>
+                                <p>Longeur du conducteur
+                                    <input id="conductor_length" type="number" value=""/>
+                                </p>
+                                <!--<p>
+                                    <button type="submit">Savegarder</button>
+                                </p>-->
+                            </form>
+                        </div>
+                        <div id="nodeSpecs">
+                          <form id="node_form">
+                            <p>Alias :
+                                <!--- JS will take care of handling text -->
+                                <input type="text" id="node_alias" value=""/>
+                            </p>
+                            <p>Prédécesseur :
+                              <input type="text" id="predecesseur_node" disabled  />
+                            </p>
+                            <p>Successeur :
+                              <input type="text" id="successeur_node" disabled  />
+                            </p>
+                            <p>
+                                <button type="submit">Savegarder</button>
+                            </p>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- <div id="component-list" class="components"></div>  -->
+            <!--- Tables for results coming from backend -->
+            <button class="accordion">
+                Transformateurs : 
+            </button>
+            <div class="panel row">
+                <div class="col-md col-8">
+                    <table  id="transformer_data">
+
+                    </table>
+                </div>
+            </div>
+            <button class="accordion">
+                Arcs : 
+            </button>
+            <div class="panel row">
+                <div class="col-md col-8">
+                    <table  id="conductor_data">
+
+                    </table>
+                </div>
+            </div>
+            <button class="accordion">
+                Charges : 
+            </button>
+            <div class="panel row">
+                <div class="col-md col-8">
+                    <table id="client_data">
+
+                    </table>
+                </div>
+            </div>
+            <button class="accordion">
+                Noeuds : 
+            </button>
+            <div class="panel row">
+                <div class="col-md col-8">
+                    <table id="node_data">
+
+                    </table>
+                </div>
+            </div>
+        </main>
+        <script src="{% static 'js/bundle.js' %}"></script>
+    {% endblock %}

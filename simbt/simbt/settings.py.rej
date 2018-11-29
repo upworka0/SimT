@@ -1,0 +1,10 @@
+diff a/simbt/simbt/settings.py b/simbt/simbt/settings.py	(rejected hunks)
+@@ -80,7 +80,7 @@
+ DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.mysql',
+-        'HOST' : "172.18.0.2",
++        'HOST' : "172.19.0.2",
+         'NAME': 'SimBT',
+         'USER': 'simbt',
+         'PASSWORD': 'S1mBTUs3r',

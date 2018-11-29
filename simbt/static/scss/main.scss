@@ -1,0 +1,24 @@
+@import "table.scss";
+@import "context-menu.scss";
+@import "navbar.scss";
+@import "button.scss";
+@import "canvas.scss";
+@import "specifications-toolbar.scss";
+@import "text.scss";
+@import "accordion.scss";
+@import "login.scss";
+
+$background-color: lightgrey;
+
+.col-centered{
+  float: none;
+  margin: 0 auto;
+}
+
+.hidden{
+  display: none;
+}
+
+body{
+  background: $background-color !important;
+}

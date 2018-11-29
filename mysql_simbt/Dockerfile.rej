@@ -1,0 +1,10 @@
+diff a/mysql_simbt/Dockerfile b/mysql_simbt/Dockerfile	(rejected hunks)
+@@ -0,0 +1,7 @@
++FROM ideoconceptsca/mysql_dev
++MAINTAINER Jeff Labonte "jflabonte@ideoconcepts.ca"
++
++# Environment variables
++ENV MYSQL_ROOT_PASSWORD Id30C0nc3pt5
++
++COPY create_database.sql /docker-entrypoint-initdb.d/
+\ No newline at end of file

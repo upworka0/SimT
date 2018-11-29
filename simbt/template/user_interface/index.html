@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+{% extends 'user_interface/base.html' %}
+
+{% load staticfiles %}
+    {% block content %}
+        <h1>Temporary Entry point</h1>
+        <ul>
+            <li>
+              <a href="user_interface/edit_study?voltage=0">Visual Page</a>
+            </li>
+            <li>
+              <a href="user_interface/compute_test">Test des calculs</a>
+            </li>
+        </ul>
+    {% endblock %}

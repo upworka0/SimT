@@ -1,0 +1,16 @@
+nav {
+  text-align: center;
+  text-decoration: underline;
+  padding-bottom: 1rem; }
+
+#navigation h1 {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 5px; }
+
+#separator {
+  padding-left: 2rem;
+  padding-right: 2rem; }
+
+.user-info {
+  float: right; }

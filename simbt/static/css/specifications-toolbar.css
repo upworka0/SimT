@@ -1,0 +1,14 @@
+.specifications {
+  padding-left: 2rem; }
+
+#transformerSpecs {
+  display: none; }
+
+#clientSpecs {
+  display: none; }
+
+#conductorSpecs {
+  display: none; }
+
+#nodeSpecs {
+  display: none; }

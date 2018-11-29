@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% extends 'user_interface/base.html' %}
+
+{% load staticfiles %}
+{% block content %}
+  <header class="container">
+    <div class="col-lg-4 col-centered">
+      <h1 class="title">Page de tests</h1>
+    </div>
+  </header>
+  <main class="container">
+    <div class="row box">
+      <div class="col-md-2">
+        <p>Tension de l'étude :</p>
+        <select id="voltageSelection">
+            <option value="0">120/240 V</option>
+            <option value="1">120/208 V</option>
+            <option value="2">347/600 V</option>
+        </select>
+      </div>
+      {% csrf_token %}
+    </div>
+    <div class="row">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Ajouter/Supprimer</th>
+            <th>Nom du noeud</th>
+            <th>Suiveur</th>
+            <th>Prédécesseur</th>
+            <th>Type</th>
+            <th>Type de chauffage</th>
+            <th>Type de logements</th>
+            <th>Surface habitée</th>
+            <th>Nombre de logements</th>
+            <th>Nombre d'étages</th>
+            <th>Longueur du conducteur</th>
+          </tr>
+          <tbody id="network">
+
+          </tbody>
+        </thead>
+      </table>
+    </div>
+    <div class="row">
+      <!-- Some information will be displayed here -->
+    </div>
+    <div id="Test">
+    </div>
+    <div class="hidden">
+      <select id="selectChauffageModel">
+        <option value="">-----</option>
+        {% for chauffage in type_chauffage %}
+          <option value="{{ chauffage.type_chauffage_id }}">{{ chauffage.type_chauffage_type}}</option>
+        {% endfor %}
+      </select>
+      <select id="selectLogementModel">
+        <option value="">-----</option>
+        {% for logement in type_logement %}
+          <option value="{{ logement.type_logement_id }}">{{ logement.type_logement_type }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <button type="button" name="button" id="showDepency">Montrer arbre de dépendances</button>
+          <div id="dependenciesTree">
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <button type="button" id="calculate_network" name="button">Calculer</button>
+          <div id="log">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="{% static 'js/bundle.js' %}"></script>
+{% endblock %}

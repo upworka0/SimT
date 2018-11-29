@@ -1,0 +1,136 @@
+table, table th, table td {
+  border: solid 1px black; }
+
+table, table th {
+  padding: 0.5rem; }
+
+table {
+  text-align: center;
+  margin: 1rem; }
+  table th {
+    font-size: 14px; }
+  table td {
+    font-size: 13px; }
+
+tr:hover {
+  background-color: #f5f5f5; }
+
+.menu {
+  width: 20%;
+  box-shadow: 3px 3px 5px #888888;
+  border-style: solid;
+  border-width: 1px;
+  border-color: grey;
+  border-radius: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  position: fixed;
+  display: none;
+  z-index: 500 !important; }
+
+.menu-item {
+  height: 20px; }
+
+.menu-item:hover {
+  background-color: #6CB5FF !important;
+  cursor: pointer !important; }
+
+nav {
+  text-align: center;
+  text-decoration: underline;
+  padding-bottom: 1rem; }
+
+#navigation h1 {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 5px; }
+
+#separator {
+  padding-left: 2rem;
+  padding-right: 2rem; }
+
+.user-info {
+  float: right; }
+
+.zoom-image {
+  width: 25px;
+  height: 20px; }
+
+.toolbox-content button {
+  display: block; }
+
+.button-selected {
+  background: blue;
+  color: white; }
+
+.zoom-buttons button {
+  display: inline-block !important; }
+
+.button {
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  position: relative;
+  left: 25%;
+  right: 25%;
+  width: 50%; }
+
+.zoom-btn {
+  width: 24%; }
+
+#stage-parent {
+  border: solid black 1px;
+  width: 100%;
+  height: 100%; }
+
+.specifications {
+  padding-left: 2rem; }
+
+#transformerSpecs {
+  display: none; }
+
+#clientSpecs {
+  display: none; }
+
+#conductorSpecs {
+  display: none; }
+
+#nodeSpecs {
+  display: none; }
+
+.centered {
+  text-align: center; }
+
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s; }
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #ccc; }
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden; }
+
+.col-centered {
+  float: none;
+  margin: 0 auto; }
+
+.hidden {
+  display: none; }
+
+body {
+  background: lightgrey !important; }

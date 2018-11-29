@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+{% extends 'user_interface/base.html' %}
+{% load staticfiles %}
+{% block content%}
+    <h2>Enregistrement</h2>
+    <form method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <a href="{% url 'login' %}">Retour à la page de connexion</a>
+        <button type="submit" value="Submit">Submit</button>
+    </form>
+{% endblock %}

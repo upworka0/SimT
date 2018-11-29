@@ -1,0 +1,15 @@
+version: '3'
+services:
+        simbt_app:
+                build: simbt
+                image: ideoconceptsca/simbt
+                ports:
+                        - "8000:8000"
+        db:
+                build: mysql_dev
+                image: ideoconceptsca/mysql_dev
+                ports:
+                        - "3306:3306"
+                environment:
+                        - MYSQL_ROOT_PASSWORD=Ide0C0nc3pt5
+
